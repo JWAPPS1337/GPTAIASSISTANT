@@ -1,13 +1,13 @@
 # Local Document Q&A System
 
-A local-first document question-answering system built with LlamaIndex and FastEmbed, featuring a Streamlit web interface. This tool allows businesses to query their documents locally without relying on cloud services.
+A local-first document question-answering system built with LlamaIndex and FastEmbed, featuring a FastAPI backend and React frontend. This tool allows businesses to query their documents locally without relying on cloud services.
 
 ## Features
 
 - 🏠 **Fully Local**: All processing happens on your machine - no cloud dependencies
 - 📚 **Document Processing**: Handles various document formats
 - 🔍 **Fast Embedding**: Uses FastEmbed for efficient document embedding
-- 🖥️ **Web Interface**: Clean Streamlit UI for easy interaction
+- 🖥️ **Modern Stack**: FastAPI backend with React frontend
 - 🚀 **Quick Setup**: Simple installation and configuration
 
 ## Installation
@@ -27,24 +27,32 @@ pip install -r requirements.txt
 
 1. Place your documents in the `docs` directory
 
-2. Run the Streamlit interface:
+2. Start the FastAPI backend:
 ```bash
-python -m streamlit run src/app.py
+python src/main.py
 ```
 
-3. Access the web interface at `http://localhost:8502`
+3. Start the React frontend (in a separate terminal):
+```bash
+cd frontend
+npm install
+npm start
+```
+
+4. Access the web interface at `http://localhost:3000`
 
 ## Project Structure
 
 ```
 .
 ├── src/
-│   ├── app.py              # Streamlit web interface
-│   ├── document_loader.py  # Document loading utilities
-│   └── index_manager.py    # LlamaIndex integration
-├── docs/                   # Place your documents here
-├── requirements.txt        # Project dependencies
-└── README.md              # This file
+│   ├── main.py            # FastAPI backend server
+│   ├── document_loader.py # Document loading utilities
+│   └── index_manager.py   # LlamaIndex integration
+├── frontend/             # React frontend
+├── docs/                 # Place your documents here
+├── requirements.txt      # Project dependencies
+└── README.md            # This file
 ```
 
 ## Dependencies
@@ -52,7 +60,8 @@ python -m streamlit run src/app.py
 - Python 3.8+
 - LlamaIndex
 - FastEmbed
-- Streamlit
+- FastAPI
+- React
 - Other dependencies listed in requirements.txt
 
 ## Local Development
