@@ -1,0 +1,21 @@
+Local GPT Test Document
+
+This is a test document to verify that our Local GPT system is working correctly.
+
+Key Features of Our System:
+1. Runs completely offline using Ollama
+2. Uses the Mistral model for inference
+3. Supports multiple document formats
+4. Provides contextual answers with source information
+
+Example Use Cases:
+- Analyzing business documents
+- Answering questions about internal policies
+- Extracting information from technical documentation
+- Summarizing meeting notes
+
+The system is designed to be:
+- Privacy-focused (all processing happens locally)
+- Easy to use (simple command-line interface)
+- Extensible (modular architecture)
+- Reliable (robust error handling) 
