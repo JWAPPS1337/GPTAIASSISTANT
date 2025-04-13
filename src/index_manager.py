@@ -1,8 +1,10 @@
 from typing import Optional
+import os
 from llama_index.core import VectorStoreIndex, Settings, SimpleDirectoryReader
 from llama_index.llms.ollama import Ollama
 from llama_index.core import Document
 import numpy as np
+from fastembed import TextEmbedding
 
 class IndexManager:
     def __init__(self, model_name: str = "mistral"):
@@ -18,8 +20,15 @@ class IndexManager:
             Settings.llm = llm
             print(f"Initialized LLM with model: {self.model_name}")
 
-            # Use default embedding model
-            print("Using default embedding model")
+            # Create cache directory if it doesn't exist
+            cache_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "models_cache")
+            os.makedirs(cache_dir, exist_ok=True)
+            
+            # Use FastEmbed for local embeddings with specific model
+            os.environ["FASTEMBED_CACHE_DIR"] = cache_dir
+            embed_model = TextEmbedding(model_name="BAAI/bge-small-en-v1.5")
+            Settings.embed_model = embed_model
+            print("Using FastEmbed for local embeddings")
 
         except Exception as e:
             raise Exception(f"Failed to initialize models: {str(e)}")
@@ -42,6 +51,5 @@ class IndexManager:
             raise ValueError("Index not created. Call create_index() first.")
         
         return self.index.as_query_engine(
-            similarity_top_k=similarity_top_k,
-            response_mode="compact"
+            similarity_top_k=similarity_top_k
         ) 

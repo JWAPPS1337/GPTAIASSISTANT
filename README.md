@@ -1,69 +1,73 @@
-# Local GPT Document Q&A
+# Local Document Q&A System
 
-A privacy-focused document Q&A system that runs entirely offline using Ollama and LlamaIndex.
+A local-first document question-answering system built with LlamaIndex and FastEmbed, featuring a Streamlit web interface. This tool allows businesses to query their documents locally without relying on cloud services.
 
 ## Features
 
-- 🔒 100% offline operation - no cloud dependencies
-- 📚 Support for PDF, TXT, and DOCX files
-- 💬 Interactive chat interface
-- 🔍 Contextual answers with source tracking
-- ⚡ Fast local inference using Mistral model
+- 🏠 **Fully Local**: All processing happens on your machine - no cloud dependencies
+- 📚 **Document Processing**: Handles various document formats
+- 🔍 **Fast Embedding**: Uses FastEmbed for efficient document embedding
+- 🖥️ **Web Interface**: Clean Streamlit UI for easy interaction
+- 🚀 **Quick Setup**: Simple installation and configuration
 
-## Prerequisites
+## Installation
 
-1. Install [Ollama](https://ollama.ai/)
-2. Pull the Mistral model:
-   ```bash
-   ollama pull mistral
-   ```
-
-## Setup
-
-1. Create a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+1. Clone the repository:
+```bash
+git clone [your-repo-url]
+cd [repo-name]
+```
 
 2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Create a `docs` folder and add your documents:
-   ```bash
-   mkdir docs
-   # Add your PDF, TXT, or DOCX files to the docs folder
-   ```
+```bash
+pip install -r requirements.txt
+```
 
 ## Usage
 
-1. Start the Q&A system:
-   ```bash
-   python src/main.py
-   ```
+1. Place your documents in the `docs` directory
 
-2. Ask questions about your documents in natural language
-3. Type 'exit' to quit
+2. Run the Streamlit interface:
+```bash
+python -m streamlit run src/app.py
+```
+
+3. Access the web interface at `http://localhost:8502`
 
 ## Project Structure
 
 ```
 .
-├── docs/               # Place your documents here
 ├── src/
-│   ├── main.py        # Entry point
-│   ├── document_loader.py    # Document loading and parsing
-│   ├── index_manager.py     # Vector index management
-│   └── query_engine.py      # Query processing and response generation
-├── requirements.txt    # Python dependencies
-└── README.md          # This file
+│   ├── app.py              # Streamlit web interface
+│   ├── document_loader.py  # Document loading utilities
+│   └── index_manager.py    # LlamaIndex integration
+├── docs/                   # Place your documents here
+├── requirements.txt        # Project dependencies
+└── README.md              # This file
 ```
 
-## Future Enhancements
+## Dependencies
 
-- [ ] Desktop GUI (Tauri/Electron)
-- [ ] Source chunk highlighting
-- [ ] Markdown export
-- [ ] Auto-reload on document changes 
+- Python 3.8+
+- LlamaIndex
+- FastEmbed
+- Streamlit
+- Other dependencies listed in requirements.txt
+
+## Local Development
+
+1. Create a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+2. Install development dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+## License
+
+MIT License - See LICENSE file for details 
