@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
-import { ThemeProviderWrapper } from '@/components/theme-provider-wrapper'
+import { Inter } from 'next/font/google'
+import { ThemeProvider } from '@/components/theme-provider-wrapper'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Local AI Assistant',
-  description: 'Your personal AI assistant that runs locally',
+  description: 'A fully local AI assistant powered by Ollama with Mistral AI',
 }
 
 export default function RootLayout({
@@ -17,10 +17,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head />
       <body className={inter.className}>
-        <ThemeProviderWrapper>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           {children}
-        </ThemeProviderWrapper>
+        </ThemeProvider>
       </body>
     </html>
   )

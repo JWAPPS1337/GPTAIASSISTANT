@@ -1,21 +1,43 @@
-version: '3.8'
+version: '3'
 services:
-  db:
-    image: postgres:15
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
     ports:
-      - "5432:5432"
+      - "5001:5001"
     volumes:
-      - db_data:/var/lib/postgresql/data
-
-  redis:
-    image: redis:7
-    restart: always
+      - ./docs:/app/docs
+      - ./models_cache:/app/models_cache
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - OLLAMA_HOST=ollama
+      - OLLAMA_PORT=11434
+      - OLLAMA_MODEL=mistral
+      - JWT_SECRET=${JWT_SECRET:-supersecretkey123456789supersecretkey123} # Default value as fallback
+    depends_on:
+      - ollama
+  
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
     ports:
-      - "6379:6379"
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:5001
+      - NEXT_PUBLIC_OLLAMA_URL=http://localhost:11434
+      - JWT_SECRET=${JWT_SECRET:-supersecretkey123456789supersecretkey123} # Same secret as backend
+    depends_on:
+      - backend
+  
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
 
 volumes:
-  db_data: 
+  ollama_data: 
