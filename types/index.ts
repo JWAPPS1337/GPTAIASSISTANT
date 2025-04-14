@@ -15,10 +15,21 @@ export interface ChatSettings {
   embeddingsProvider: string
 }
 
+export type ModelProvider = 
+  | "openai" 
+  | "google" 
+  | "anthropic" 
+  | "mistral" 
+  | "groq" 
+  | "perplexity" 
+  | "ollama" 
+  | "custom" 
+  | "openrouter"
+
 export interface LLM {
   modelId: string
   modelName: string
-  provider: string
+  provider: ModelProvider
   hostedId?: string
   // Add more properties as needed
 }

@@ -4,6 +4,8 @@ import logging
 from llama_index.core import VectorStoreIndex, Settings, Document
 from llama_index.llms.ollama import Ollama
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
+# Optionally add fastembed support
+from fastembed import TextEmbedding as FastEmbedding
 
 logger = logging.getLogger(__name__)
 

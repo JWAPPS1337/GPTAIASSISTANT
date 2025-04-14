@@ -8,10 +8,11 @@ from typing import List, Optional, Dict, Any, Union
 from llama_index.core import Document, VectorStoreIndex, Settings
 from llama_index.llms.ollama import Ollama
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
-from document_loader import DocumentLoader
-from index_manager import IndexManager
-from query_engine import QueryManager
-from auth_middleware import JWTMiddleware, get_current_user
+from fastembed import TextEmbedding
+from src.document_loader import DocumentLoader
+from src.index_manager import IndexManager
+from src.query_engine import QueryManager
+from src.auth_middleware import JWTMiddleware, get_current_user
 import httpx
 import time
 

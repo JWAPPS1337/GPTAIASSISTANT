@@ -1,14 +1,15 @@
 "use server"
 
-import { Tables } from "../supabase/types"
-
-/**
- * This is a placeholder implementation to resolve the import error.
- * Replace with actual implementation when available.
- */
-export async function getWorkspacesByUserId(
-  userId: string
-): Promise<Tables<"workspaces">[]> {
-  console.log("Placeholder implementation of getWorkspacesByUserId", userId);
-  return [];
+// Define any necessary types locally
+export const getWorkspacesByUserId = async (userId: string) => {
+  // Mock implementation
+  return [
+    {
+      id: "default-workspace",
+      name: "Default Workspace",
+      user_id: userId,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    }
+  ]
 } 
