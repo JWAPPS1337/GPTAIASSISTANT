@@ -1,10 +1,9 @@
 from typing import Optional
 import os
-from llama_index.core import VectorStoreIndex, Settings, SimpleDirectoryReader
+from llama_index.core import VectorStoreIndex, Settings
 from llama_index.llms.ollama import Ollama
 from llama_index.core import Document
-import numpy as np
-from fastembed import TextEmbedding
+from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 
 class IndexManager:
     def __init__(self, model_name: str = "mistral"):
@@ -24,11 +23,13 @@ class IndexManager:
             cache_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "models_cache")
             os.makedirs(cache_dir, exist_ok=True)
             
-            # Use FastEmbed for local embeddings with specific model
-            os.environ["FASTEMBED_CACHE_DIR"] = cache_dir
-            embed_model = TextEmbedding(model_name="BAAI/bge-small-en-v1.5")
+            # Use HuggingFace for embeddings
+            embed_model = HuggingFaceEmbedding(
+                model_name="sentence-transformers/all-MiniLM-L6-v2",
+                cache_folder=cache_dir
+            )
             Settings.embed_model = embed_model
-            print("Using FastEmbed for local embeddings")
+            print("Using HuggingFace for embeddings")
 
         except Exception as e:
             raise Exception(f"Failed to initialize models: {str(e)}")

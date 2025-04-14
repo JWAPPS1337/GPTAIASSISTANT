@@ -24,14 +24,18 @@ class DocumentLoader:
         except Exception as e:
             raise Exception(f"Error loading documents: {str(e)}")
 
-    def get_document_info(self) -> str:
-        """Return a summary of loaded documents."""
+    def get_document_info(self) -> List[dict]:
+        """Return information about loaded documents."""
         try:
-            documents = self.load_documents()
             info = []
-            for doc in documents:
-                filename = os.path.basename(doc.metadata.get('file_name', 'Unknown'))
-                info.append(f"- {filename}")
-            return "\n".join(info)
+            for file in os.listdir(self.docs_path):
+                file_path = os.path.join(self.docs_path, file)
+                if os.path.isfile(file_path):
+                    info.append({
+                        "filename": file,
+                        "size": os.path.getsize(file_path),
+                        "type": os.path.splitext(file)[1][1:].upper()
+                    })
+            return info
         except Exception as e:
-            return f"Error getting document info: {str(e)}" 
+            raise Exception(f"Error getting document info: {str(e)}") 

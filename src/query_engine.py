@@ -9,25 +9,16 @@ class QueryManager:
         """Process a user query and return the response with metadata."""
         try:
             response = self.query_engine.query(query)
-            return self._format_response(response)
+            return {
+                "response": str(response.response).strip(),
+                "sources": [
+                    {
+                        "file_name": node.metadata.get("file_name", "Unknown"),
+                        "score": float(node.score) if hasattr(node, "score") else None,
+                        "text": node.text[:200] + "..." if len(node.text) > 200 else node.text
+                    }
+                    for node in response.source_nodes
+                ] if hasattr(response, "source_nodes") else []
+            }
         except Exception as e:
-            raise Exception(f"Error processing query: {str(e)}")
-
-    def _format_response(self, response) -> Dict:
-        """Format the response with source information and metadata."""
-        result = {
-            "response": response.response.strip(),
-            "sources": []
-        }
-        
-        # Add source information if available
-        if hasattr(response, 'source_nodes') and response.source_nodes:
-            for node in response.source_nodes:
-                source = {
-                    "file_name": node.metadata.get('file_name', 'Unknown'),
-                    "score": float(node.score) if hasattr(node, 'score') else None,
-                    "text": node.text[:200] + "..." if len(node.text) > 200 else node.text
-                }
-                result["sources"].append(source)
-        
-        return result 
+            raise Exception(f"Error processing query: {str(e)}") 
